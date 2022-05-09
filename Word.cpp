@@ -36,35 +36,32 @@ Word& Word:: operator!() {
 }
 
 Word& Word:: operator & () {
-	char temp;
-	for(int i = 0; i < size/2 ;i++) {
-		temp = Words[i];
-		Words[i] = Words[size - 1 - i];
-
-}
+	char* temp = new char[size + 1];
+	for (int i = 0; i < size; i++)
+		temp[i] = Words[i];
+	temp[size] = '\0';
+	Words = new char[size + 1];
+	for (int i = size - 1, j = 0; j < size; i--, j++)
+		Words[i] = temp[j];
+	Words[size] = '\0';
 	return *this;
 }
 
 Word& Word::operator << (int n) {
-	/*for (int i = 0; i < n; i++) {
-		Words[size - 1] = Words[0];
-		for (int j = 0; j < size - 1; j++) {
-			Words[j] = Words[j + 1];
-		}
+	for (int j = 0; j < n; j++) {
+		char temp = Words[0];
+		for (int i = 0; i < size - 1; i++)
+			Words[i] = Words[i + 1];
+		Words[size - 1] = temp;
 	}
-	return *this;*/
-	char temp = Words[0];
-	for (int i = 0; i < size - 1; i++)
-		Words[i] = Words[i + 1];
-	Words[size - 1] = temp;
 	return *this;
 }
+
 Word& Word::operator >> (int m) {
-	for (int i = 0; i < m; i++) {
-		Words[size - 1] = Words[0];
-		for (int j = size-1; j>1 ; j--) {
-			Words[j] = Words[j - 1];
-		}
+	for (int j = 0; j < m; j++) {
+		char temp = Words[size - 1];
+		for (int i = size - 1; i >= 1; i--) Words[i] = Words[i - 1];
+		Words[0] = temp;
 	}
 	return *this;
 }
